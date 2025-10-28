@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/linhphan/Desktop/ECS50/ecs50hw2/div'
+relocations:     []
+...
