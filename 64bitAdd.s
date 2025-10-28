@@ -16,8 +16,8 @@ num2: # address 108
 
 _start:
    # Adding the lower bits
-   movl num1 + 4, %eax # EAX = *(num1 + 4);
-   addl num2 + 4, %eax # EAX += *(num2 + 4);
+   movl 4(num1), %eax # EAX = *(num1 + 4);
+   addl 4(num2), %eax # EAX += *(num2 + 4);
 
    # Adding the upper bits
    movl num1, %edx # EDX = *num1;
