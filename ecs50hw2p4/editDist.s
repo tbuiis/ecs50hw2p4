@@ -150,7 +150,7 @@ str_len_start:  # strlen that will be used inside of editDist
         # str[count] != '\0'
         # str[count] - '\0' != 0
         # neg: str[count] - '\0' == 0
-        cmpb (%ecx, %ebx, 1), $ 0 # str[count] - '\0'
+        cmpb (%ecx, %ebx, 1), $0 # str[count] - '\0'
         je strlen_loop_end
         incl %ebx   # count++;
         jmp strlen_loop_start
