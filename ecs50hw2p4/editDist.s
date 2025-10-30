@@ -6,12 +6,14 @@
 # everything will be callee saves, arguments from memory, return memory
 
 string1:
-    .rept 101 # space for 101 bytes
+    .byte 'f','l','a','w',0
+    .rept 101-5 # space for 101 bytes
     .byte 0
     .endr
 
 string2:
-    .rept 101 # space for 101 bytes
+    .byte 'l','a','w','n',0
+    .rept 101-5 # space for 101 bytes
     .byte 0
     .endr
 
@@ -249,8 +251,8 @@ editDist_start:
             jge inner_for_end     # if >=0 go to end of outer loop
 
             if_start:
-                movb string1-1(,%ecx,1), %al  # move word[i-1] into %eax (%al is lower 8)
-                cmpb string2-1(,%edx,1), %al  # move word[j-1] into %ebx (%bl is lower 8)
+                movb (string1 -1)(,%ecx,1), %al  # move word[i-1] into %eax (%al is lower 8)
+                cmpb (string2 -1)(,%edx,1), %al  # move word[j-1] into %ebx (%bl is lower 8)
 
                 je chars_equal
 
@@ -259,7 +261,7 @@ editDist_start:
 
                 # min(oldDist[j], curDist[j-1])
                 movl oldDist(,%edx,4), %eax     # moves oldDist into eax
-                movl curDist-4(,%edx,4), %ebx   # moves curdist into ebx
+                movl (curDist -4)(,%edx,4), %ebx   # moves curdist into ebx
                 movl %eax, intA             # puts into memory for intA
                 movl %ebx, intB             # puts into memory for intB
                 call min_start              # calls func
@@ -307,7 +309,7 @@ editDist_start:
     # dist = oldDist[word2_len] (also is the return dist)
     movl word2_len, %eax        # word2_len into eax
     movl oldDist(,%eax,4), %ebx # oldDist[word2_len] into ebx
-    movl %ebx, dist             # oldDist[word2_len] into dist
+    movl %ebx, %eax             # dist is now in ebx
 
     pop %ebp
     pop %esi
