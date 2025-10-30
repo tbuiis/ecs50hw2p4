@@ -254,7 +254,7 @@ editDist_start:
                 movl $string1, %eax
                 movl $string2, %ebx
                 movb -1(%eax,%ecx,1), %al  # move word[i-1] into %eax (%al is lower 8)
-                cmpb -1(%eax,%edx,1), %al  # move word[j-1] into %ebx (%bl is lower 8)
+                cmpb -1(%ebx,%edx,1), %al  # move word[j-1] into %ebx (%bl is lower 8)
 
                 je chars_equal
 
