@@ -275,7 +275,6 @@ editDist_start:
                 movl %edx, %esi
                 decl %esi
                 movl oldDist(,%esi,4), %ebx   # moves oldDist[j-1] into ebx
-                decl %ebx
                 movl %eax, intA                 # moves last min into intA
                 movl %ebx, intB                 # moves oldDist[j-1] into intB
                 call min_start                  # calls func
