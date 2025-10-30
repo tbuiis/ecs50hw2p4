@@ -263,14 +263,16 @@ editDist_start:
 
                 # min(oldDist[j], curDist[j-1])
                 movl oldDist(,%edx,4), %eax     # moves oldDist into eax
-                movl (curDist -4)(,%edx,4), %ebx   # moves curdist into ebx
+                movl curDist(,%edx,4), %ebx   # moves curdist into ebx
+                decl %ebx
                 movl %eax, intA             # puts into memory for intA
                 movl %ebx, intB             # puts into memory for intB
                 call min_start              # calls func
                 movl intMin, %eax           # gets min, and puts into eax
 
                 # min( whatever from first min, oldDist[j-1]) +1
-                movl oldDist-4(,%edx,4), %ebx   # moves oldDist[j-1] into ebx
+                movl oldDist(,%edx,4), %ebx   # moves oldDist[j-1] into ebx
+                decl %ebx
                 movl %eax, intA                 # moves last min into intA
                 movl %ebx, intB                 # moves oldDist[j-1] into intB
                 call min_start                  # calls func
