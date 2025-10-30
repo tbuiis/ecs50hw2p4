@@ -251,8 +251,10 @@ editDist_start:
             jge inner_for_end     # if >=0 go to end of outer loop
 
             if_start:
-                movb (string1 -1)(,%ecx,1), %al  # move word[i-1] into %eax (%al is lower 8)
-                cmpb (string2 -1)(,%edx,1), %al  # move word[j-1] into %ebx (%bl is lower 8)
+                movl $string1, %eax
+                movl $string2, %ebx
+                movb -1(%eax,%ecx,1), %al  # move word[i-1] into %eax (%al is lower 8)
+                cmpb -1(%eax,%edx,1), %al  # move word[j-1] into %ebx (%bl is lower 8)
 
                 je chars_equal
 
@@ -294,13 +296,10 @@ editDist_start:
         inner_for_end:
 
         # swap(&oldDist, &curDist);
-        movl $oldDist, ptrA     # puts oldDist into ptrA
-        movl $curDist, ptrB     # puts curDist into ptrB
-        call swap_start         # calls function, but swapstarts only changes ptrA and ptrB, need to put into oldDist and curDist
-        movl ptrA, %eax         # temp puts ptrA into eax
-        movl ptrB, %ebx         # temp puts ptrB into ebx
-        movl %eax, oldDist      # puts ptrA into oldDist
-        movl %ebx, curDist      # puts ptrB into curDist
+        movl oldDist, %eax
+        movl curDist, %ebx
+        movl %ebx, oldDist
+        movl %eax, curDist
 
         incl %ecx               # i++
         jmp outer_for_start     # jump back to outer for start
