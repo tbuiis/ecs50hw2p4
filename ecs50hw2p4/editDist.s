@@ -289,9 +289,7 @@ editDist_start:
                 movl %edx, %esi       # load pointer
                 decl %esi
                 movl oldDist(,%esi,4), %eax     # eax = oldDist[j-1]
-                movl curDist, %edi           # load pointer
-                movl %eax, (%edi,%edx,4)     # curDist[j] = eax    
-
+                movl %eax, curDist(,%edx,4)     # curDist[j] = eax    
 
 
             if_end:
