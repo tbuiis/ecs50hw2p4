@@ -170,7 +170,6 @@ editDist_start:
     # ecx will be i
     # edx will be j
     # going to push and pop all just to make sure they are all saved
-    push %eax
     push %ebx
     push %ecx
     push %edx
