@@ -301,15 +301,21 @@ editDist_start:
         inner_for_end:
 
         # swap(&oldDist, &curDist);
-        movl $oldDist, ptrA      # ptrA = &oldDist
-        movl $curDist, ptrB      # ptrB = &curDist
-        call swap_start          # swaps the values in ptrA and ptrB
+        movl $0, %esi             # index i = 0
+        swap_loop:
+            cmpl word2_len, %esi  # check i <= word2_len
+            jg swap_done
 
-        # now write back swapped pointers to oldDist and curDist
-        movl ptrA, %eax
-        movl %eax, oldDist
-        movl ptrB, %eax
-        movl %eax, curDist
+            movl oldDist(,%esi,4), %eax  # eax = oldDist[i]
+            movl curDist(,%esi,4), %ebx  # ebx = curDist[i]
+
+            movl %ebx, oldDist(,%esi,4)  # oldDist[i] = curDist[i]
+            movl %eax, curDist(,%esi,4)  # curDist[i] = oldDist[i] (saved in eax)
+
+            incl %esi
+            jmp swap_loop
+
+        swap_done:
 
         incl %ecx               # i++
         jmp outer_for_start     # jump back to outer for start
