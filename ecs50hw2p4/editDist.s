@@ -338,6 +338,7 @@ editDist_end:
 
 
 _start:
+    call editDist_start
 
 
 done:
