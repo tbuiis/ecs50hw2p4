@@ -286,8 +286,9 @@ editDist_start:
                 jmp if_end
         
                 chars_equal:
-                movl oldDist, %esi           # load pointer
-                movl (%esi,%edx,4), %eax     # eax = oldDist[j-1]
+                movl %edx, %esi       # load pointer
+                decl %esi
+                movl oldDist(,%esi,4), %eax     # eax = oldDist[j-1]
                 movl curDist, %edi           # load pointer
                 movl %eax, (%edi,%edx,4)     # curDist[j] = eax    
 
@@ -300,10 +301,11 @@ editDist_start:
         inner_for_end:
 
         # swap(&oldDist, &curDist);
-        movl oldDist, %eax
-        movl curDist, %ebx
-        movl %ebx, oldDist
-        movl %eax, curDist
+        movl oldDist, %eax   # eax = oldDist
+        movl curDist, %ebx   # ebx = curDist
+        movl %ebx, tempPtr   # temp = curDist
+        movl %eax, curDist   # curDist = oldDist
+        movl %ebx, oldDist   # oldDist = temp
 
         incl %ecx               # i++
         jmp outer_for_start     # jump back to outer for start
