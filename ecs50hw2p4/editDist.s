@@ -237,7 +237,7 @@ editDist_start:
         jge outer_for_end
 
         # curDist[0] = i;
-        movl %ecx, curDist(,0,4)
+        movl %ecx, curDist
 
         # for(j = 1; j < word2_len + 1; j++)
         movl $1, %edx           # j = 1
@@ -325,7 +325,6 @@ editDist_start:
     pop %edx
     pop %ecx
     pop %ebx
-    pop %eax
 
     ret
 editDist_end:
